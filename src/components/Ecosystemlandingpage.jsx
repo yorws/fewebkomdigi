@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import apiClient from './api'; // Pastikan PATH INI BENAR: '../api'
+import apiClient from './api'; // PASTIKAN PATH INI BENAR: '../api' atau sesuaikan dengan struktur folder Anda
 
 // =========================================================
 // KOMPONEN ANAK-ANAK HALAMAN OUR TEAM
-// Didefinisikan di luar komponen utama Ourteamlandingpage untuk struktur yang lebih baik
 // =========================================================
 
-// === Komponen Bagian One Team, Shared Mission (Hero) ===
+/**
+ * Komponen untuk bagian "One Team, Shared Mission" (Hero Section).
+ * Menampilkan judul, subjudul, dan ilustrasi banner tim.
+ * Mendukung data dinamis dari API dengan fallback default.
+ */
 const OneTeamMissionHero = ({ data }) => {
-  // Fallback untuk URL gambar dan teks jika data tidak tersedia
   const imageUrl = data?.illustration_url || 'src/assets/ourteamlandingpage.png';
   const title = data?.title || "One Team, Shared Mission";
   const subtitle = data?.subtitle || "We work as one team with a shared goal, relying on synergy and collaboration to achieve success together.";
@@ -22,6 +24,7 @@ const OneTeamMissionHero = ({ data }) => {
           <img src={imageUrl} alt="Team Collaboration Illustration" className="team-graphic" />
         </div>
       </div>
+      {/* CSS untuk komponen ini (disarankan dipindahkan ke file CSS terpisah) */}
       <style>{`
           /* one-team-mission-container (Banner our team) */
           .one-team-mission-container {
@@ -61,18 +64,20 @@ const OneTeamMissionHero = ({ data }) => {
   );
 };
 
-// === Komponen Bagian Our Approach ===
+/**
+ * Komponen untuk bagian "Our Approach".
+ * Menampilkan judul, subjudul, dan grid kartu-kartu pendekatan.
+ * Mendukung data dinamis dari API dengan fallback default.
+ */
 const OurApproachSection = ({ data }) => {
-  // Mendefinisikan kartu pendekatan berdasarkan data yang diterima atau default
   const approachCards = [
     { icon: data?.approach_0_icon, title: data?.approach_0_title, description: data?.approach_0_description },
     { icon: data?.approach_1_icon, title: data?.approach_1_title, description: data?.approach_1_description },
     { icon: data?.approach_2_icon, title: data?.approach_2_title, description: data?.approach_2_description },
     { icon: data?.approach_3_icon, title: data?.approach_3_title, description: data?.approach_3_description },
-  ].filter(card => card && card.icon && card.title && card.description); // Filter kartu yang tidak lengkap
+  ].filter(card => card && card.icon && card.title && card.description);
 
   const finalApproachCards = approachCards.length > 0 ? approachCards : [
-    // Kartu default jika tidak ada data yang disediakan
     { icon: 'src/assets/personfill.png', title: 'Human-Centered (Default)', description: 'Tailored to support personal growth and long-term career progression.' },
     { icon: 'src/assets/koper.png', title: 'Industry-Aligned (Default)', description: 'Co-created with stakeholders to meet evolving market demands.' },
     { icon: 'src/assets/diagram.png', title: 'Technology-Driven (Default)', description: 'Leveraging cutting-cutting tools for efficient and impactful solutions.' },
@@ -94,6 +99,7 @@ const OurApproachSection = ({ data }) => {
           ))}
         </div>
       </div>
+      {/* CSS untuk komponen ini (disarankan dipindahkan ke file CSS terpisah) */}
       <style>{`
           /* OurApproachSection Container (Frame 14259) */
           .our-approach-section-container {
@@ -144,7 +150,9 @@ const OurApproachSection = ({ data }) => {
   );
 };
 
-// === Komponen Bagian Tim Utama (Foto Kiri) ===
+/**
+ * Komponen untuk menampilkan anggota tim utama dengan foto di sisi kiri.
+ */
 const TeamMembersSection = ({ member }) => {
   if (!member) return null;
 
@@ -193,7 +201,7 @@ const TeamMembersSection = ({ member }) => {
           </div>
         </div>
       </div>
-
+      {/* CSS untuk komponen ini (disarankan dipindahkan ke file CSS terpisah) */}
       <style>{`
             /* team-members-section-container (Frame 3, outer) */
             .team-members-section-container {
@@ -203,35 +211,16 @@ const TeamMembersSection = ({ member }) => {
             }
 
             /* team-member-card-wrapper (Frame 3, inner) sekarang gabung dengan section-inner-container */
-            .team-member-card-wrapper {
-              display: flex; flex-direction: row; align-items: center; padding: 50px; gap: 50px;
-              width: 100%; max-width: 1224px; height: 650px; background: #D1E2F5; border-radius: 50px; box-sizing: border-box;
-              margin: 0 auto;
-            }
-
-            /* member-image-placeholder (Rectangle 1029) */
-            .member-image-placeholder {
-              width: 426px; height: 550px;
-              background: #E0E0E0; flex-shrink: 0; border-radius: 10px; display: flex; justify-content: center;
-              align-items: center; overflow: hidden; box-sizing: border-box;
-            }
-            .member-image {
-              width: 100%; height: 100%; object-fit: cover; border-radius: 10px;
-            }
-
-            .member-details {
-              display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-              padding: 0px; gap: 30px; width: 648px; height: 346px;
-              flex-grow: 1; box-sizing: border-box;
-            }
-
+            .team-member-card-wrapper { display: flex; flex-direction: row; align-items: center; padding: 50px; gap: 50px; width: 100%; max-width: 1224px; height: 650px; background: #D1E2F5; border-radius: 50px; box-sizing: border-box; margin: 0 auto; }
+            .member-image-placeholder { width: 426px; height: 550px; background: #E0E0E0; flex-shrink: 0; border-radius: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden; box-sizing: border-box; }
+            .member-image { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+            .member-details { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0px; gap: 30px; width: 648px; height: 346px; flex-grow: 1; box-sizing: border-box; }
             .member-details .member-name { font-size: 2rem; font-weight: bold; color: #000; margin: 0; word-break: break-word; }
             .member-details .member-position { font-size: 1.2rem; color: #000; margin: 0; word-break: break-word; }
             .member-details .member-bio { font-size: 1rem; line-height: 1.6; color: #000; margin: 0; word-break: break-word; }
             .member-details .member-quote { font-size: 1rem; font-style: italic; color: #000; margin: 0; word-break: break-word; }
             .social-icons { display: flex; gap: 15px; margin-top: 10px; }
             .social-icon { width: 35px; height: 35px; object-fit: contain; }
-
             /* Responsive Adjustments for TeamMembersSection */
             @media (max-width: 1200px) {
               .team-members-section-container { padding: 30px 0; min-height: auto; height: auto; }
@@ -256,12 +245,14 @@ const TeamMembersSection = ({ member }) => {
               .social-icon { width: 25px; height: 25px; }
             }
           `}
-        </style>
+      </style>
     </section>
   );
 };
 
-// Komponen baru untuk kotak tim yang dibalik (foto di kanan)
+/**
+ * Komponen untuk menampilkan anggota tim utama dengan foto di sisi kanan (layout terbalik).
+ */
 const TeamMemberReversedSection = ({ member }) => {
   if (!member) return null;
 
@@ -310,6 +301,7 @@ const TeamMemberReversedSection = ({ member }) => {
           <img src={member.photo_url || "src/assets/image_a73e5c.png"} alt={member.name} className="member-image" />
         </div>
       </div>
+      {/* CSS untuk komponen ini (disarankan dipindahkan ke file CSS terpisah) */}
       <style>{`
             /* Specific styles for the reversed layout */
             .team-member-card-wrapper.reversed {
@@ -345,11 +337,14 @@ const TeamMemberReversedSection = ({ member }) => {
   );
 };
 
-// Komponen untuk bagian "Our Core Team of Excellence" (Grid Anggota Lainnya)
+/**
+ * Komponen untuk bagian "Our Core Team of Excellence" (Grid Anggota Lainnya).
+ * Menampilkan grid anggota tim dengan efek hover untuk detail bio dan ikon sosial.
+ * Mendukung data dinamis dari API dengan fallback default.
+ */
 const OurCoreTeamSection = ({ members, pageSectionData }) => {
   const title = pageSectionData?.title || "Our Core Team of Excellence";
 
-  // Default icons for social media
   const defaultLinkedinIcon = "src/assets/linkin.png";
   const defaultEmailIcon = "src/assets/email.png";
   const defaultInstagramIcon = "src/assets/instagram.png";
@@ -357,7 +352,6 @@ const OurCoreTeamSection = ({ members, pageSectionData }) => {
   const defaultGithubIcon = "src/assets/github.png";
   const defaultTwitterIcon = "src/assets/twitter.png";
 
-  // Default members for the core team if API returns empty
   const finalCoreTeamMembers = members.length > 0 ? members : [
     { photo_url: "src/assets/crewilustrasi.png", name: "Nama Anggota 1 (Default)", position: "Posisi 1", bio: "Default bio.", linkedin_url: "https://www.linkedin.com/", email_url: "mailto:default@example.com", instagram_url: "https://instagram.com/default", facebook_url: "https://facebook.com/default", github_url: "https://github.com/default", twitter_url: "https://twitter.com/default" },
     { photo_url: "src/assets/crewilustrasi.png", name: "Nama Anggota 2 (Default)", position: "Posisi 2", bio: "Default bio.", linkedin_url: "https://www.linkedin.com/", email_url: "mailto:default@example.com", instagram_url: "https://instagram.com/default", facebook_url: "https://facebook.com/default", github_url: "https://github.com/default", twitter_url: "https://twitter.com/default" },
@@ -430,7 +424,7 @@ const OurCoreTeamSection = ({ members, pageSectionData }) => {
           ))}
         </div>
       </div>
-
+      {/* CSS untuk komponen ini (disarankan dipindahkan ke file CSS terpisah) */}
       <style>{`
             /* Our Core Team Section Container (Frame 14216) */
             .core-team-section-container {
@@ -519,12 +513,12 @@ const OurCoreTeamSection = ({ members, pageSectionData }) => {
             .core-team-member-name {
               font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px; text-align: center; color: #196ECD; width: 100%; margin: 0; transition: color 0.3s ease; word-break: break-word; }
             .core-team-member-position { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 20px; line-height: 24px; text-align: center; color: #196ECD; width: 100%; margin: 0; transition: color 0.3s ease; word-break: break-word; opacity: 1 !important; visibility: visible !important; position: static !important; }
-
+            
             /* Konten yang terlihat saat di-hover */
             .core-team-hover-content {
                 display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 40px; gap: 0; width: 100%; height: 100%; background: none; position: absolute; top: 0; left: 0; box-sizing: border-box; color: white; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
             .core-team-member-card:hover .core-team-hover-content { opacity: 1; visibility: visible; }
-
+            
             .core-team-hover-info-top { display: flex; flex-direction: column; align-items: flex-start; padding: 0px; gap: 7px; width: 100%; flex-shrink: 0; }
             .core-team-member-name-hover { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px; text-align: left; color: white; width: 100%; margin: 0; word-break: break-word; }
             .core-team-member-position-hover { font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 20px; line-height: 24px; text-align: left; color: white; width: 100%; margin: 0; word-break: break-word; }
@@ -638,7 +632,7 @@ export default function Ourteamlandingpage() {
         {/* Render bagian Core Team jika ada anggota yang tersisa */}
         {coreTeamMembers.length > 0 && <OurCoreTeamSection members={coreTeamMembers} pageSectionData={getSectionContent('our_core_team_section')} />}
 
-        {/* Global Styles untuk halaman Our Team */}
+        {/* Global Styles untuk halaman Our Team (disarankan dipindahkan ke file CSS terpisah) */}
         <style>{`
           /* GLOBAL RESET & BODY */
           * { margin: 0; padding: 0; box-sizing: border-box; }
